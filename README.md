@@ -4,7 +4,7 @@
 
 ### Predicting Human Caloric Expenditure from Biometric & Activity Data using XGBoost
 
-<img src="images/banner.png" width="850"/>
+<img src="images/banner20.png" width="850"/>
 
 <br/>
 
