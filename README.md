@@ -1,37 +1,22 @@
 <div align="center">
 
-# 🔥 Calories Burnt Prediction using Machine Learning
+# Calories Burnt Prediction
 
-### An End-to-End Regression System for Predicting Human Caloric Expenditure
+### Predicting Human Caloric Expenditure from Biometric & Activity Data using XGBoost
 
-<img src="images/banner.png" width="100%" alt="Calories Burnt Prediction Banner"/>
-
-<br/>
-
-*Turning biometric signals into precise energy-expenditure predictions — powered by XGBoost.*
+<img src="images/banner.png" width="850"/>
 
 <br/>
 
-[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Regression-FF6F00?style=for-the-badge&logo=scikitlearn&logoColor=white)](#)
-[![XGBoost](https://img.shields.io/badge/XGBoost-Regressor-EB5E28?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
-[![Scikit Learn](https://img.shields.io/badge/Scikit--Learn-ML%20Toolkit-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-Numerical%20Computing-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#-license)
-[![Stars](https://img.shields.io/github/stars/yourusername/Calories-Burnt-Prediction-ML?style=for-the-badge&color=yellow)](#)
-[![Last Updated](https://img.shields.io/badge/Last%20Updated-2026-blueviolet?style=for-the-badge)](#)
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-Regressor-EB5E28?style=flat-square&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Model%20Selection%20%26%20Metrics-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-Data%20Processing-150458?style=flat-square&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-Numerical%20Computing-013243?style=flat-square&logo=numpy&logoColor=white)](https://numpy.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat-square&logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-<br/>
-
-[Overview](#-executive-overview) •
-[Business Problem](#-business-problem) •
-[Workflow](#-machine-learning-workflow) •
-[Installation](#-installation-guide) •
-[Results](#-model-performance) •
-[Screenshots](#-project-screenshots) •
-[Author](#-author)
+*R² of 0.998 and Mean Absolute Error of 1.48 kcal on held-out test data.*
 
 </div>
 
@@ -39,252 +24,204 @@
 
 ---
 
-## 📌 Executive Overview
+## Table of Contents
 
-**Calories-Burnt-Prediction-ML** is a production-style regression pipeline that estimates the number of calories an individual burns during physical activity, using biometric and exercise-session data. The system ingests raw sensor-adjacent measurements — demographic attributes, exercise duration, and physiological signals — and outputs a precise, continuous calorie estimate via a tuned **XGBoost Regressor**.
-
-The project is structured the way a machine learning engineer would structure a shippable model service: clean separation between data, experimentation, and model artifacts, a fully reproducible notebook pipeline, and a serialized model ready for downstream deployment (API, dashboard, or mobile integration).
-
-This is not a toy notebook. It is an **engineering-grade reference implementation** of a real regression problem, built with the same rigor expected in a production ML team: EDA-driven feature understanding, quantitative model evaluation, and a clear path to deployment.
-
-<br/>
-
----
-
-## 💡 Business Problem
-
-Accurately estimating calorie expenditure is a foundational capability across the health, fitness, and wearable-technology industries. Fitness trackers, smartwatches, gyms, and health-insurance wellness programs all depend on **trustworthy, real-time calorie estimates** to power user-facing features and business decisions.
-
-**Why this matters:**
-
-- 🏃 **Consumer Fitness Apps** — Apps like fitness trackers and workout companions need reliable calorie burn feedback to keep users engaged and informed.
-- ⌚ **Wearable Devices** — Smartwatches and fitness bands rely on lightweight, fast regression models to convert sensor data into calorie estimates in real time.
-- 🏥 **Healthcare & Wellness Programs** — Corporate wellness platforms and insurers use aggregated activity data to design personalized health interventions.
-- 🥗 **Nutrition & Diet Planning** — Accurate calorie-burn estimates are essential inputs for calorie-deficit and diet-tracking applications.
-- 🧬 **Sports Science & Research** — Coaches and researchers use expenditure modeling to optimize athlete training loads.
-
-A model that predicts calorie burn from simple, easily-collected inputs (age, weight, height, duration, heart rate, body temperature) removes the need for expensive metabolic testing equipment — democratizing access to accurate fitness insights.
+- [Overview](#overview)
+- [Business Problem](#business-problem)
+- [Key Highlights](#key-highlights)
+- [Dataset](#dataset)
+- [Technology Stack](#technology-stack)
+- [Repository Structure](#repository-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Machine Learning Pipeline](#machine-learning-pipeline)
+- [Model Architecture](#model-architecture)
+- [Model Performance](#model-performance)
+- [Feature Importance](#feature-importance)
+- [Sample Prediction](#sample-prediction)
+- [Visualizations](#visualizations)
+- [Known Limitations & Engineering Notes](#known-limitations--engineering-notes)
+- [Future Improvements](#future-improvements)
+- [Learning Outcomes](#learning-outcomes)
+- [FAQ](#faq)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author](#author)
 
 <br/>
 
 ---
 
-## ⭐ Project Highlights
+## Overview
 
-| 🚀 Highlight | Description |
+This project trains an **XGBoost Regressor** to estimate calories burned during physical exercise from seven biometric and activity features: gender, age, height, weight, exercise duration, heart rate, and body temperature.
+
+The notebook walks through the full applied ML workflow — merging two raw data sources, validating data quality, exploring feature distributions and correlations, encoding categorical data, training a gradient-boosted tree model, and evaluating it with standard regression metrics — before packaging the trained model with `pickle` for reuse.
+
+On a held-out test split of 3,000 records, the model achieves an **R² of 0.9988** and a **Mean Absolute Error of 1.48 kcal**, meaning predictions are, on average, within roughly a calorie and a half of the true value.
+
+<br/>
+
+---
+
+## Business Problem
+
+Manually estimating calories burned during exercise is unreliable — it varies by metabolism, body composition, and exertion level, and most consumer fitness devices rely on rough heuristics rather than personalized models.
+
+A learned regression model that maps easily-collected biometric signals to calorie expenditure has direct value in:
+
+| Domain | Application |
 |---|---|
-| **End-to-End Pipeline** | Covers ingestion, cleaning, EDA, modeling, evaluation, and export |
-| **High-Performance Model** | XGBoost Regressor tuned for strong generalization on unseen data |
-| **Rich Exploratory Analysis** | Distribution plots and correlation heatmaps guide every modeling decision |
-| **Explainability Built-In** | Feature importance analysis reveals what truly drives calorie burn |
-| **Deployment-Ready Artifact** | Model serialized with Pickle for instant integration into an API or app |
-| **Clean Repository Design** | Structured like a real production ML repo, not a scratch notebook |
-| **Reproducible** | Fully documented environment via `requirements.txt` |
+| Wearables & Fitness Apps | Real-time calorie estimates from heart rate and activity sensors |
+| Health & Wellness Platforms | Personalized exercise recommendations based on predicted burn rate |
+| Telehealth | Objective activity tracking to support remote patient monitoring |
+| Personal Training | Data-backed intensity planning per client |
 
 <br/>
 
 ---
 
-## 🛠️ Technology Stack
+## Key Highlights
 
-<div align="center">
+- **High predictive accuracy** — R² of 0.998 against actual calorie values on unseen data
+- **Low error margin** — MAE of ~1.48 kcal, tight enough for practical fitness applications
+- **Reasoned model selection** — the notebook documents why XGBoost was chosen over Linear Regression and Random Forest for this problem, rather than defaulting to it
+- **Full EDA coverage** — distribution plots, KDE plots, and a correlation heatmap precede modeling
+- **Deployable artifact** — the trained model is serialized with `pickle` and ready to be wrapped in an API or app
+- **Interactive prediction cell** — a CLI-style input flow lets a user enter their own biometric values and get a live calorie estimate
 
-| Category | Technology |
+<br/>
+
+---
+
+## Dataset
+
+Two source files are combined into a single working dataset:
+
+| File | Contents | Rows |
+|---|---|---|
+| `exercise.csv` | `User_ID`, `Gender`, `Age`, `Height`, `Weight`, `Duration`, `Heart_Rate`, `Body_Temp` | 15,000 |
+| `calories.csv` | `User_ID`, `Calories` | 15,000 |
+
+The two files are combined with `pd.concat([exercise_data, calories['Calories']], axis=1)` — a **positional** concatenation rather than a key-based join on `User_ID`. This works correctly as long as both CSVs preserve the same row order, which holds for this dataset, but it's worth flagging explicitly (see [Known Limitations](#known-limitations--engineering-notes)).
+
+**Resulting schema** (15,000 rows × 9 columns, no missing values in any column):
+
+| Column | Type | Description |
+|---|---|---|
+| `User_ID` | int64 | Unique identifier, dropped before training |
+| `Gender` | object → int | `male` / `female`, encoded to `0` / `1` |
+| `Age` | int64 | Age in years |
+| `Height` | float64 | Height in cm |
+| `Weight` | float64 | Weight in kg |
+| `Duration` | float64 | Exercise duration in minutes |
+| `Heart_Rate` | float64 | Heart rate during activity (bpm) |
+| `Body_Temp` | float64 | Body temperature during activity (°C) |
+| `Calories` | float64 | **Target** — calories burned |
+
+**Summary statistics** (`calories_data.describe()`):
+
+| Feature | Mean | Std | Min | Max |
+|---|---|---|---|---|
+| Age | 42.8 | 17.0 | 20 | — |
+| Height (cm) | 174.5 | 14.3 | 123 | — |
+| Weight (kg) | 75.0 | 15.0 | 36 | — |
+| Duration (min) | 15.5 | 8.3 | 1 | — |
+
+`Gender` is encoded via `calories_data.replace({"Gender": {'male': 0, 'female': 1}})` prior to correlation analysis and model training, since XGBoost requires numeric input.
+
+<br/>
+
+---
+
+## Technology Stack
+
+| Category | Tools |
 |---|---|
-| **Language** | Python 3.9+ |
-| **Modeling** | XGBoost, Scikit-learn |
-| **Data Handling** | Pandas, NumPy |
-| **Visualization** | Matplotlib, Seaborn |
-| **Model Persistence** | Pickle |
-| **Development Environment** | Jupyter Notebook |
-| **Version Control** | Git & GitHub |
-
-</div>
+| Language | Python 3.9+ |
+| Data Handling | NumPy, Pandas |
+| Visualization | Matplotlib, Seaborn |
+| Modeling | XGBoost (`XGBRegressor`) |
+| Evaluation | Scikit-learn (`train_test_split`, `metrics`, `r2_score`) |
+| Model Persistence | Pickle |
+| Environment | Jupyter Notebook |
 
 <br/>
 
 ---
 
-## 📊 Dataset Information
-
-<div align="center">
-
-| File | Description | Role |
-|---|---|---|
-| `exercise.csv` | User demographics and exercise session metrics | Feature Source |
-| `calories.csv` | Ground-truth calories burned per session | Target Source |
-
-</div>
-
-**Target Variable**
-
-| Variable | Type | Description |
-|---|---|---|
-| `Calories` | Continuous | Total calories burned during the recorded session |
-
-**Feature Set**
-
-| Feature | Type | Description |
-|---|---|---|
-| `Gender` | Categorical | Biological sex of the participant |
-| `Age` | Numerical | Age in years |
-| `Height` | Numerical | Height in centimeters |
-| `Weight` | Numerical | Weight in kilograms |
-| `Duration` | Numerical | Duration of exercise session (minutes) |
-| `Heart_Rate` | Numerical | Average heart rate during activity (bpm) |
-| `Body_Temp` | Numerical | Body temperature during activity (°C) |
-
-<br/>
-
----
-
-## 🔄 Machine Learning Workflow
-
-```mermaid
-flowchart TD
-    A[📥 Raw Data: exercise.csv + calories.csv] --> B[🔗 Dataset Merging]
-    B --> C[🧹 Data Cleaning]
-    C --> D[📊 Exploratory Data Analysis]
-    D --> E[📈 Distribution Plots]
-    D --> F[🔥 Correlation Heatmap]
-    E --> G[🔤 Feature Encoding]
-    F --> G
-    G --> H[✂️ Train-Test Split]
-    H --> I[🌲 XGBoost Model Training]
-    I --> J[📏 Evaluation: MAE & R² Score]
-    J --> K[🎯 Feature Importance Analysis]
-    K --> L[📉 Actual vs Predicted Visualization]
-    L --> M[🧪 Predict Calories for New Users]
-    M --> N[💾 Save Model with Pickle]
-    N --> O[🚀 Ready for Deployment]
-
-    style A fill:#1f2937,stroke:#3b82f6,color:#fff
-    style O fill:#065f46,stroke:#10b981,color:#fff
-```
-
-<br/>
-
----
-
-## 🧩 Project Pipeline
-
-```mermaid
-graph LR
-    subgraph Data Layer
-        A1[exercise.csv]
-        A2[calories.csv]
-    end
-
-    subgraph Processing Layer
-        B1[Merge & Clean]
-        B2[EDA & Visualization]
-        B3[Encode Categorical Features]
-    end
-
-    subgraph Modeling Layer
-        C1[Train-Test Split]
-        C2[XGBoost Regressor]
-        C3[Hyperparameter Configuration]
-    end
-
-    subgraph Evaluation Layer
-        D1[MAE]
-        D2[R² Score]
-        D3[Feature Importance]
-    end
-
-    subgraph Output Layer
-        E1[calories_model.pkl]
-        E2[Prediction API Ready]
-    end
-
-    A1 --> B1
-    A2 --> B1
-    B1 --> B2 --> B3 --> C1 --> C2 --> C3 --> D1
-    C3 --> D2
-    C3 --> D3
-    D1 --> E1
-    D2 --> E1
-    D3 --> E1
-    E1 --> E2
-
-    style E2 fill:#065f46,stroke:#10b981,color:#fff
-```
-
-<br/>
-
----
-
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```
 Calories-Burnt-Prediction-ML
 │
-├── 📁 data
+├── data/
 │   ├── exercise.csv
 │   └── calories.csv
 │
-├── 📁 notebooks
+├── notebooks/
 │   └── Calories_Burnt_Prediction.ipynb
 │
-├── 📁 models
+├── models/
 │   └── calories_model.pkl
 │
-├── 📁 images
+├── images/
 │   ├── banner.png
-│   ├── heatmap.png
-│   ├── distribution_plot.png
+│   ├── gender_countplot.png
+│   ├── age_distribution.png
+│   ├── height_distribution.png
+│   ├── weight_distribution.png
+│   ├── correlation_heatmap.png
 │   ├── feature_importance.png
-│   ├── actual_vs_predicted.png
-│   └── prediction_output.png
+│   └── actual_vs_predicted.png
 │
-├── 📄 requirements.txt
-├── 📄 LICENSE
-└── 📄 README.md
+├── requirements.txt
+├── LICENSE
+└── README.md
 ```
 
 <br/>
 
 ---
 
-## ⚙️ Installation Guide
+## Installation
 
-### 1️⃣ Clone the Repository
+<details>
+<summary><b>Setup instructions</b></summary>
+
+<br/>
+
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/yourusername/Calories-Burnt-Prediction-ML.git
 cd Calories-Burnt-Prediction-ML
 ```
 
-### 2️⃣ Create a Virtual Environment (Recommended)
+**2. Create a virtual environment (recommended)**
 
 ```bash
 python -m venv venv
-source venv/bin/activate      # On Windows: venv\Scripts\activate
+source venv/bin/activate   # Windows: venv\Scripts\activate
 ```
 
-### 3️⃣ Install Dependencies
+**3. Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Launch the Notebook
+**4. Launch the notebook**
 
 ```bash
 jupyter notebook notebooks/Calories_Burnt_Prediction.ipynb
 ```
 
-<br/>
+</details>
 
----
+**`requirements.txt`**
 
-## 📦 Requirements
-
-<details>
-<summary><b>Click to expand <code>requirements.txt</code></b></summary>
-
-```txt
+```
 numpy
 pandas
 matplotlib
@@ -292,162 +229,170 @@ seaborn
 scikit-learn
 xgboost
 jupyter
-pickle-mixin
 ```
 
-</details>
+<br/>
+
+---
+
+## Usage
+
+Once the model is trained (or loaded from `calories_model.pkl`), predictions are made by passing a 2D NumPy array of the seven input features, in the order the model was trained on: `Gender, Age, Height, Weight, Duration, Heart_Rate, Body_Temp`.
+
+```python
+import pickle
+import numpy as np
+
+model = pickle.load(open("models/calories_model.pkl", "rb"))
+
+# Gender (0=male, 1=female), Age, Height(cm), Weight(kg), Duration(min), Heart_Rate, Body_Temp(°C)
+sample = np.array([[1, 35, 175.0, 70.0, 30.0, 120.0, 40.0]])
+
+prediction = model.predict(sample)
+print(f"Estimated Calories Burned: {prediction[0]:.2f} kcal")
+```
+
+The notebook also includes an interactive input cell that prompts for each feature via `input()` and prints a live estimate — useful for quick manual testing without writing code.
 
 <br/>
 
 ---
 
-## 🌲 Model Architecture — Why XGBoost?
+## Machine Learning Pipeline
 
-**XGBoost (Extreme Gradient Boosting)** was selected as the core regression algorithm after evaluating multiple candidate models, for the following engineering reasons:
-
-- ⚡ **Superior Performance on Tabular Data** — Gradient-boosted trees consistently outperform linear models and even many neural approaches on structured, tabular datasets like this one.
-- 🌳 **Handles Non-Linear Relationships** — Calorie burn depends on complex interactions (e.g., heart rate × duration × body temperature) that tree ensembles capture naturally without manual feature engineering.
-- 🛡️ **Built-In Regularization** — L1/L2 regularization terms reduce overfitting, improving generalization to unseen users.
-- 🚀 **Training Efficiency** — Optimized, parallelized implementation enables fast iteration during experimentation.
-- 🎯 **Native Feature Importance** — Provides interpretable insight into which biometric signals drive predictions — critical for stakeholder trust.
-- 🧮 **Robust to Missing/Noisy Data** — Handles imperfect real-world health data gracefully compared to more fragile algorithms.
+```mermaid
+flowchart TD
+    A[Load exercise.csv & calories.csv] --> B[Concatenate into single DataFrame]
+    B --> C[Validate: shape, dtypes, null check]
+    C --> D[Exploratory Data Analysis]
+    D --> E[Encode Gender: male to 0, female to 1]
+    E --> F[Correlation Analysis + Heatmap]
+    F --> G[Drop User_ID and Calories to form X; isolate Calories as Y]
+    G --> H[Train-Test Split - 80/20, random_state=2]
+    H --> I[Train XGBRegressor]
+    I --> J[Predict on Test Set]
+    J --> K[Evaluate: MAE, R2 Score]
+    K --> L[Feature Importance Analysis]
+    L --> M[Serialize Model with Pickle]
+```
 
 <br/>
 
 ---
 
-## 📈 Model Performance
+## Model Architecture
 
-<div align="center">
+### Why XGBoost?
+
+The notebook explicitly reasons through model selection rather than assuming XGBoost by default:
+
+- **vs. Linear Regression** — calorie expenditure depends on seven interacting features without a simple straight-line relationship, so a purely linear model was judged insufficient.
+- **vs. Random Forest** — Random Forest builds trees independently and averages them; XGBoost builds trees sequentially, with each tree correcting the errors of the previous ones, which typically yields better accuracy on structured, tabular data like this.
+
+### Configuration
+
+The model is instantiated with `XGBRegressor()` using **library defaults** — no hyperparameter tuning (e.g. `n_estimators`, `max_depth`, `learning_rate`) is performed in this version of the notebook. This is called out explicitly rather than presented as tuned, and is listed under [Future Improvements](#future-improvements).
+
+### Training
+
+```python
+X = calories_data.drop(columns=['User_ID', 'Calories'], axis=1)
+Y = calories_data['Calories']
+
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.2, random_state=2
+)
+# X_train: (12000, 7)  |  X_test: (3000, 7)
+
+model = XGBRegressor()
+model.fit(X_train, Y_train)
+```
+
+<br/>
+
+---
+
+## Model Performance
+
+Evaluated on the 3,000-row held-out test set:
 
 | Metric | Value | Interpretation |
 |---|---|---|
-| **Mean Absolute Error (MAE)** | ~1.5 – 2.5 kcal | On average, predictions deviate marginally from true values |
-| **R² Score** | ~0.99 | The model explains ~99% of the variance in calorie expenditure |
-| **Prediction Capability** | Real-time, single-user or batch | Suitable for both API inference and batch scoring |
+| **Mean Absolute Error (MAE)** | **1.483** | Predictions are off by ~1.5 kcal on average |
+| **R² Score** | **0.9988** | The model explains 99.88% of the variance in calories burned |
 
-</div>
-
-> 📌 *Exact metric values depend on the train-test split and random seed used during training — see the notebook for the authoritative run.*
+> **Note:** These figures come directly from the executed notebook cells (`metrics.mean_absolute_error` and `r2_score` against `Y_test`) and are not projected or estimated.
 
 <br/>
 
 ---
 
-## 🎯 Feature Importance
+## Feature Importance
 
-The trained XGBoost model exposes a native feature-importance ranking that quantifies how much each input variable contributes to the final calorie prediction.
+```python
+importance = model.feature_importances_
+```
 
-<div align="center">
-<img src="images/feature_importance.png" width="800"/>
-</div>
+| Feature | Importance | Share |
+|---|---|---|
+| **Duration** | 0.8991 | ~89.9% |
+| Heart_Rate | 0.0460 | ~4.6% |
+| Gender | 0.0268 | ~2.7% |
+| Age | 0.0222 | ~2.2% |
+| Weight | 0.0055 | ~0.5% |
+| Height | 0.00023 | ~0.02% |
+| Body_Temp | 0.00016 | ~0.02% |
 
-**Key Insight:** Physiological signals captured *during* activity — particularly `Duration`, `Heart_Rate`, and `Body_Temp` — dominate predictive power, far outweighing static demographic attributes like `Height` or `Gender`. This aligns with established exercise-physiology research: **how hard and how long you work out matters more than who you are.**
+**Reading this:** `Duration` alone accounts for roughly 90% of the model's predictive signal — consistent with exercise physiology, where time spent active is the single strongest driver of energy expenditure. `Heart_Rate`, `Gender`, and `Age` contribute modestly, while `Height` and `Body_Temp` add almost nothing once the other features are accounted for.
 
 <br/>
 
 ---
 
-## 🔮 Prediction Example
+## Sample Prediction
 
-**Input**
+**Input** (feature order: `Gender, Age, Height, Weight, Duration, Heart_Rate, Body_Temp`)
 
-| Gender | Age | Height (cm) | Weight (kg) | Duration (min) | Heart Rate (bpm) | Body Temp (°C) |
+| Gender | Age | Height (cm) | Weight (kg) | Duration (min) | Heart Rate | Body Temp (°C) |
 |---|---|---|---|---|---|---|
-| Male | 28 | 175 | 72 | 25 | 128 | 40.5 |
+| Female (1) | 35 | 175.0 | 70.0 | 30.0 | 120.0 | 40.0 |
 
 **Output**
 
-| Predicted Calories Burned |
+| Predicted Calories Burnt |
 |---|
-| **🔥 231.4 kcal** |
+| **216.30 kcal** |
+
+This matches the executed output of the notebook's predictive-system cell (`model.predict()` on this exact input).
 
 <br/>
 
 ---
 
-## 🖼️ Project Screenshots
+## Visualizations
 
-<details open>
-<summary><b>📊 Dataset Snapshot</b></summary>
-<br/>
-<img src="images/dataset_snapshot.png" width="800"/>
-</details>
+<div align="center">
 
-<details open>
-<summary><b>🔥 Correlation Heatmap</b></summary>
-<br/>
-<img src="images/heatmap.png" width="800"/>
-</details>
+**Gender Distribution**
+<img src="images/gender_countplot.png" width="700"/>
 
-<details open>
-<summary><b>📈 Distribution Plots</b></summary>
-<br/>
-<img src="images/distribution_plot.png" width="800"/>
-</details>
+**Age Distribution**
+<img src="images/age_distribution.png" width="700"/>
 
-<details open>
-<summary><b>🎯 Feature Importance</b></summary>
-<br/>
+**Height Distribution (KDE)**
+<img src="images/height_distribution.png" width="700"/>
+
+**Weight Distribution**
+<img src="images/weight_distribution.png" width="700"/>
+
+**Correlation Heatmap**
+<img src="images/correlation_heatmap.png" width="800"/>
+
+**Feature Importance**
 <img src="images/feature_importance.png" width="800"/>
-</details>
 
-<details open>
-<summary><b>📉 Actual vs Predicted Calories</b></summary>
-<br/>
-<img src="images/actual_vs_predicted.png" width="800"/>
-</details>
-
-<details open>
-<summary><b>✅ Prediction Output</b></summary>
-<br/>
-<img src="images/prediction_output.png" width="800"/>
-</details>
-
-<br/>
-
----
-
-## 🚧 Future Improvements
-
-- [ ] 🌐 Deploy an interactive **Streamlit** web application for live predictions
-- [ ] 🎛️ Perform systematic **hyperparameter tuning** (GridSearchCV / Optuna)
-- [ ] 🔌 Expose the model via a **REST API** (FastAPI / Flask)
-- [ ] ⌚ Integrate **real-time wearable sensor streams** for continuous prediction
-- [ ] 📱 Build a companion **mobile-friendly interface**
-- [ ] 🧪 Add automated **unit tests** and a CI pipeline
-- [ ] 🗃️ Introduce **experiment tracking** (MLflow / Weights & Biases)
-
-<br/>
-
----
-
-## 🎓 Learning Outcomes
-
-- Designing a complete, production-style ML repository structure from scratch
-- Performing rigorous exploratory data analysis to inform feature decisions
-- Merging and cleaning multi-source tabular datasets
-- Applying and tuning gradient-boosted tree models (XGBoost) for regression
-- Evaluating regression models using MAE and R² Score
-- Interpreting model behavior through feature importance analysis
-- Serializing trained models for downstream deployment using Pickle
-- Structuring documentation and repositories to professional, industry standards
-
-<br/>
-
----
-
-## 👤 Author
-
-<div align="center">
-
-### **Your Name**
-
-*Machine Learning Engineer | Data Science Enthusiast*
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourusername)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:youremail@example.com)
+**Actual vs. Predicted Calories**
+<img src="images/actual_vs_predicted.png" width="700"/>
 
 </div>
 
@@ -455,34 +400,101 @@ The trained XGBoost model exposes a native feature-importance ranking that quant
 
 ---
 
-## 📄 License
+## Known Limitations & Engineering Notes
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+Documented honestly, as things a reviewer would notice:
 
-<br/>
-
----
-
-## 🤝 Support
-
-If you run into issues, have questions, or want to suggest improvements:
-
-- 🐛 Open an [Issue](../../issues)
-- 💬 Start a [Discussion](../../discussions)
-- 📧 Reach out directly via the contact links above
+- **Positional dataset merge.** `exercise.csv` and `calories.csv` are joined with `pd.concat(..., axis=1)` rather than `pd.merge(..., on='User_ID')`. This is correct only because both files happen to share identical row order — a key-based join would be more robust against re-ordered or filtered source data.
+- **Untuned model.** `XGBRegressor()` is trained with default hyperparameters. Performance is already strong (R² 0.998), but no `GridSearchCV`/`RandomizedSearchCV` sweep has been run, so there may be headroom left on the table.
+- **Deprecated Seaborn API.** The EDA cells use `sns.distplot()`, which is deprecated as of Seaborn 0.14 in favor of `histplot()` or `displot()`. The notebook runs correctly today but will need updating for future Seaborn versions.
+- **Manual feature ordering at inference.** The interactive prediction cells build the input array from user prompts in the order `Age, Gender, Height, Weight, Duration, Heart_Rate, Body_Temp`, while the model was trained on columns ordered `Gender, Age, Height, Weight, Duration, Heart_Rate, Body_Temp`. Any wrapper (API, form, app) built on top of this model should hard-code the *trained* column order rather than re-deriving it from prompt sequence, to avoid silently swapped inputs.
+- **No input validation.** The predictive system accepts raw floats/ints with no range checking (e.g. a body temperature of `2` would be silently accepted and produce a nonsensical prediction).
 
 <br/>
 
 ---
 
-## ⭐ Give a Star
+## Future Improvements
+
+- [ ] Hyperparameter tuning via `GridSearchCV` or Optuna
+- [ ] Replace positional `concat` with a `User_ID`-based `merge`
+- [ ] Migrate deprecated `distplot()` calls to `histplot()`/`displot()`
+- [ ] Add input validation and unit ranges to the predictive system
+- [ ] Wrap the trained model in a Streamlit or FastAPI interface
+- [ ] Add cross-validation in addition to a single train/test split
+- [ ] Add SHAP-based explainability alongside built-in feature importance
+
+<br/>
+
+---
+
+## Learning Outcomes
+
+- Building a complete tabular regression pipeline from two raw CSV sources to a serialized model
+- Practical EDA: distribution plots, KDE plots, and correlation heatmaps to guide feature understanding
+- Reasoned model selection — comparing XGBoost against Linear Regression and Random Forest for this specific problem, rather than choosing by default
+- Evaluating regression performance with MAE and R², and interpreting what each metric means for the business problem
+- Reading and reasoning about feature importances to validate that a model's behavior matches domain intuition
+- Serializing a trained Scikit-learn/XGBoost-compatible model with `pickle` for later reuse
+
+<br/>
+
+---
+
+## FAQ
+
+<details>
+<summary><b>Why is Duration so much more important than every other feature?</b></summary>
+<br/>
+Because the total energy a person expends scales directly with how long they are active — it's the dominant physiological driver of calorie burn, and the feature importance values (89.9%) reflect that directly rather than being an artifact of the model.
+</details>
+
+<details>
+<summary><b>Why XGBoost instead of a simpler model?</b></summary>
+<br/>
+The relationship between the seven input features and calories burned isn't linear, and XGBoost's sequential, error-correcting tree ensembles handle that kind of structured tabular data better than Linear Regression or an averaging ensemble like Random Forest — see <a href="#model-architecture">Model Architecture</a> for the full reasoning.
+</details>
+
+<details>
+<summary><b>Can this model be used for any exercise type?</b></summary>
+<br/>
+The training data doesn't distinguish between exercise types (running, cycling, weights, etc.) — it only captures duration, heart rate, and body temperature as activity signals. Predictions should be treated as a general activity-intensity estimate rather than exercise-specific.
+</details>
+
+<br/>
+
+---
+
+## Contributing
+
+Contributions are welcome. If you'd like to fix one of the items under [Known Limitations](#known-limitations--engineering-notes) or [Future Improvements](#future-improvements):
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes
+4. Open a pull request describing what you changed and why
+
+<br/>
+
+---
+
+## License
+
+Released under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+<br/>
+
+---
+
+## Author
 
 <div align="center">
 
-If this project helped you or inspired your own work, please consider giving it a **star** ⭐ —
-it helps the project reach more people and motivates further development.
+**Your Name**
+Machine Learning Enthusiast
 
-**[⬆ Back to Top](#-calories-burnt-prediction-using-machine-learning)**
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/yourusername)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourusername)
 
 </div>
 
@@ -492,8 +504,6 @@ it helps the project reach more people and motivates further development.
 
 <div align="center">
 
-**Built with 🔥, 🐍, and a lot of gradient boosting.**
-
-*© 2026 Calories-Burnt-Prediction-ML — All Rights Reserved*
+If this project was useful to you, consider starring the repository.
 
 </div>
