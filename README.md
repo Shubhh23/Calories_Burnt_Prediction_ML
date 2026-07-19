@@ -380,7 +380,7 @@ This matches the executed output of the notebook's predictive-system cell (`mode
 <img src="images/age_distribution.png" width="700"/>
 
 **Height Distribution**
-<img src="images/height_distribution.png" width="700"/>
+<img src="images/Height_distribution.png" width="700"/>
 
 **Weight Distribution**
 <img src="images/weight_distribution.png" width="700"/>
