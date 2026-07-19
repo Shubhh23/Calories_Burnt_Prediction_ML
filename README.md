@@ -374,12 +374,12 @@ This matches the executed output of the notebook's predictive-system cell (`mode
 <div align="center">
 
 **Gender Distribution**
-<img src="images/gender_countplot.png" width="700"/>
+<img src="images/gender_distribution.png" width="700"/>
 
 **Age Distribution**
 <img src="images/age_distribution.png" width="700"/>
 
-**Height Distribution (KDE)**
+**Height Distribution**
 <img src="images/height_distribution.png" width="700"/>
 
 **Weight Distribution**
